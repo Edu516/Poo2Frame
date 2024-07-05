@@ -1,0 +1,77 @@
+@startuml
+
+package Frame {
+    class Banco {
+        - String nome
+        - List<Tabela> tabelas
+
+        + Banco(nome: String)
+        + adicionarTabela(tabela: Tabela): void
+        + getNome(): String
+        + getTabelas(): List<Tabela>
+    }
+
+    class Tabela {
+        - String nome
+        - List<Campo> campos
+
+        + Tabela(nome: String)
+        + adicionarCampo(campo: Campo): void
+        + getNome(): String
+        + getCampos(): List<Campo>
+    }
+
+    class Campo {
+        - String nome
+        - TipoCampo tipo
+
+        + Campo(nome: String, tipo: TipoCampo)
+        + getNome(): String
+        + getTipo(): TipoCampo
+        + getSqlType(): String
+    }
+
+    class TipoCampo {
+        - String sqlType
+
+        + TipoCampo(sqlType: String)
+        + getSqlType(): String
+    }
+
+    class Conexao {
+        - String host
+        - int port
+        - String user
+        - String pass
+        - String database
+
+        + Conexao(host: String, port: int, user: String, pass: String, database: String)
+        + conectar(): Connection
+    }
+
+    class Frame {
+        + gerarScript(banco: Banco): String
+        + executarScript(conexao: Connection, script: String): void
+    }
+
+    class FrameFacade {
+        - Conexao conexao
+        - Banco banco
+
+        + FrameFacade(host: String, port: int, user: String, pass: String, databaseName: String)
+        + adicionarTabela(nomeTabela: String): void
+        + adicionarCampo(nomeTabela: String, nomeCampo: String, tipoCampo: TipoCampo): void
+        + gerarScript(): String
+        + executarScript(): void
+    }
+
+    Banco "1" --> "*" Tabela : contém
+    Tabela "1" --> "*" Campo : possui
+    Campo --> TipoCampo : usa
+    FrameFacade "uses" --> "1" Conexao : utiliza
+    Frame "calls" --> "1" Banco : gera
+    Frame "calls" --> "1" Connection : executa
+    FrameFacade --> Frame : utiliza
+}
+
+@enduml

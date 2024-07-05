@@ -1,0 +1,27 @@
+@startuml
+    class Frame.Banco
+    class Frame.Campo
+    class Frame.Conexao
+    class Frame.Frame
+    class Frame.FrameFacade
+    class Frame.Tabela
+    class java.sql.Connection
+    class java.sql.DriverManager
+    class java.sql.ResultSet
+    class java.sql.SQLException
+    class java.util.ArrayList
+    class java.util.List
+    enum Frame.TipoCampo
+    Frame.Banco ..> java.util.ArrayList
+    Frame.Banco ..> java.util.List
+    Frame.Conexao ..> java.sql.Connection
+    Frame.Conexao ..> java.sql.DriverManager
+    Frame.Conexao ..> java.sql.SQLException
+    Frame.Frame ..> java.sql.Connection
+    Frame.Frame ..> java.sql.ResultSet
+    Frame.Frame ..> java.sql.SQLException
+    Frame.FrameFacade ..> java.sql.Connection
+    Frame.FrameFacade ..> java.sql.SQLException
+    Frame.Tabela ..> java.util.ArrayList
+    Frame.Tabela ..> java.util.List
+@enduml
